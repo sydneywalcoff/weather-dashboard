@@ -1,0 +1,13 @@
+/* Universal Styles */
+
+
+/* Body */
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    height: 65px;
+}

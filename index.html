@@ -12,20 +12,31 @@
 <header>
     <h1>Weather Dashboard</h1>
 </header>
-<main>
-    <div id="search-container">
-        <!-- label, form, and submit button -->
-        <div id="saved-searches"></div>
-    </div>
-    <div id="search-results">
-        <div id="city-container">
-            <h2 id="cityName"><span id="date"></span></h2>
-            <p class="temperature">Temperature:</p>
-            <p class="humidity">Humidity:</p>
-            <p class="wind-speed">Wind Speed:</p>
-            <p class="uv-index">UV Index:</p>
+<main class="container-fluid">
+    <div class="row">
+        <div id="search-container" class="col bg-light">
+            <!-- label, form, and submit button -->
+            <form>
+                <div class="form-group">
+                    <label for="cityInput">Search for a City:</label>
+                    <input type="text" class="form-control" id="cityInput">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <div id="saved-searches"></div>
         </div>
-        <div id="forecast-container"></div>
+        <div id="search-results" class="card col-8">
+            <div id="city-container" class="card-body">
+                <h2 id="cityName"><span id="date"></span></h2>
+                <p class="temperature">Temperature:</p>
+                <p class="humidity">Humidity:</p>
+                <p class="wind-speed">Wind Speed:</p>
+                <p class="uv-index">UV Index:</p>
+            </div>
+            <div id="forecast-container">
+                
+            </div>
+        </div>
     </div>
 </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
