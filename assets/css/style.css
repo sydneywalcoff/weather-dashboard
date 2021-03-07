@@ -7,7 +7,23 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    color: white;
+    background-color: #4F4F4F;
+    color: #fff;
     height: 65px;
+}
+
+.form-group {
+    display: flex;
+}
+
+button {
+    margin-left: 10px !important;
+}
+.container-fluid {
+    width: 90%;
+    margin-top: 3%;
+}
+
+#search-container {
+    margin-right: 2%;
 }
