@@ -20,6 +20,7 @@ const getCityInput = (e) => {
     e.preventDefault();
     let cityName = $input.val();
     getWeatherData(cityName);
+    $input.val('');
 };
 
 $inputButton.on("click", getCityInput);
