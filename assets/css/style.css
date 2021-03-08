@@ -41,9 +41,16 @@ button {
     justify-content: space-between;
     text-align: center;
     color:#fff;
+}
+
+h4.date {
     font-weight: bold;
 }
 
 .day {
     flex-direction: column;
+}
+
+.day p {
+    display: flex;
 }
