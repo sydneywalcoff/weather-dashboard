@@ -49,6 +49,7 @@ h4.date {
 
 .day {
     flex-direction: column;
+    padding: 1%;
 }
 
 .day p {
