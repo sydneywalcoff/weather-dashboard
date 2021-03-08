@@ -27,11 +27,12 @@ const getWeatherData = cityName => {
                 let $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
 
                 // grab temperature & create p element
+                const degreeSign = '\u00B0';
                 const tempKelvin = currentDay.main.temp;
 
                 const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
                 const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
-                let $tempEl = $("<p>").text(`Temp: ${tempFahrenheit}`);
+                let $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
 
                 // grab humidity & create p element
 
