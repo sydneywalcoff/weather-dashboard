@@ -27,3 +27,23 @@ button {
 #search-container {
     margin-right: 2%;
 }
+
+#forecast-container {
+    margin-top: 2%;
+}
+
+.forecast-title {
+    margin-bottom: 1.5%;
+}
+
+.forecast-container {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    color:#fff;
+    font-weight: bold;
+}
+
+.day {
+    flex-direction: column;
+}
