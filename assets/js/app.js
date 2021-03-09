@@ -100,11 +100,11 @@ const uvIndexValidator = uvIndex => {
     const uvIndexEl = $('#featured-uv-index');
     // if/else statement to qualify uvIndex number
     if(uvIndex < 4) {
-        uvIndexEl.addClass("bg-success text-light"); // green white text
+        uvIndexEl.addClass("badge badge-success text-light"); // green light text
     } else if(4 <= uvIndex < 7) {
-        uvIndexEl.addClass("bg-warning text-light"); // yellow white text
+        uvIndexEl.addClass("badge badge-warning text-dark"); // yellow dark text
     } else if (7 <= uvIndex) {
-        uvIndexEl.addClass("bg-danger text-light"); // red white text
+        uvIndexEl.addClass("badge badge-danger text-light"); // red light text
     } else {
         alert('error');
     }
