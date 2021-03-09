@@ -3,12 +3,15 @@ const day = d.getDate();
 const month = d.getMonth();
 const year = d.getFullYear();
 
-let apiKey = '7740f742ec7905224fc725aeef79fcd9';
+const apiKey = '7740f742ec7905224fc725aeef79fcd9';
 const degreeSign = '\u00B0';
 
 const $input = $('#city-input');
 const $inputButton = $('.btn');
 const $featuredH2 = $('h2');
+const $savedSearchesEl = $('#saved-searches');
+
+let savedSearches = [];
 
 const getGeoCodingData = cityName => {
     const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
@@ -29,7 +32,6 @@ const getWeatherData = (lat, lon, cityName) => {
 
     fetch(oneCallApiUrl).then(function(response) {
         response.json().then(function(data) {
-            console.log(data.current)
             // grab temperature and append to #featured-temp
             const temp = data.current.temp;
             $('#featured-temp').append(temp + ' ' + degreeSign + 'F');
@@ -123,23 +125,64 @@ const submitButtonHandler = (e) => {
     clearResults();
     let cityName = $input.val();
     getGeoCodingData(cityName);
+    saveSearches(cityName);
     $input.val('');
 };
 
 // clears past results
 const clearResults = () => {
-    $("#featured-temp").text("Temperature: ");
-    $("#featured-humidity").text("Humidity: ");
-    $("#featured-wind-speed").text("Wind Speed: ");
+    $("#featured-temp").text("");
+    $("#featured-humidity").text("");
+    $("#featured-wind-speed").text("");
     $("#featured-uv-index").text("");
     for(let i=1; i< 6; i++) {
         const $forecastDayEl = $("#forecast-day-"+ i);
-        console.log($forecastDayEl)
         $forecastDayEl.text('');
     }
 };
 
+const saveSearches = cityName => {
+    // create `p` element with content cityName class card-body
+    const savedSearchP = $("<p>").addClass("card text-center").text(cityName);
+
+    // append to savedSearchesEl
+    $savedSearchesEl.append(savedSearchP);
+    savedSearches.push(cityName);
+
+    // add button listener to re-search
+    $(savedSearchP).on("click", function() {
+        console.log("you clicked ", cityName);
+        clearResults();
+        getGeoCodingData(cityName);
+    });
+
+    localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
+};
+
+const loadSearches = () => {
+    savedSearches = JSON.parse(localStorage.getItem("savedSearches"));
+    if(!savedSearches) {
+        savedSearches = [];
+    }
 
 
+    for(let i =0; i < savedSearches.length; i++) {
+        let currentCity = savedSearches[i];
+        const savedSearchP = $("<p>").addClass("card text-center").text(currentCity);
+
+        // append to savedSearchesEl
+        $savedSearchesEl.append(savedSearchP);
+
+        // add button listener to re-search
+        $(savedSearchP).on("click", function() {
+            console.log("you clicked ", currentCity)
+            clearResults();
+            getGeoCodingData(currentCity);
+        });
+    };
+};
+
+
+loadSearches();
 
 $inputButton.on("click", submitButtonHandler);
