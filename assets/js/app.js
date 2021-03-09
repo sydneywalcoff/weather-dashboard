@@ -23,8 +23,8 @@ const getWeatherData = cityName => {
 
                 // grab icon & create element
                 const weatherIconId = currentDay.weather[0].icon;
-                let iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`
-                let $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
+                const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`
+                const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
 
                 // grab temperature & create p element
                 const degreeSign = '\u00B0';
@@ -32,13 +32,16 @@ const getWeatherData = cityName => {
 
                 const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
                 const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
-                let $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
+                const $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
 
                 // grab humidity & create p element
+                const humidity = currentDay.main.humidity;
+                const $humidityEl = $("<p>").text(`Humidity: ${humidity}%`)
 
                 // append to container
                 $forecastDayEl.append($iconImg);
                 $forecastDayEl.append($tempEl);
+                $forecastDayEl.append($humidityEl);
 
                 // add to counter
                 counter++;
