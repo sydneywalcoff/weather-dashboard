@@ -55,3 +55,23 @@ button {
 .icon-sm {
     width: 10%;
 }
+
+.extreme {
+    background-color: purple;
+}
+
+.high {
+    background-color: red;
+}
+
+.medium {
+    background-color: orange;
+}
+
+.moderate {
+    background-color: yellow;
+}
+
+.low {
+    background-color: green;
+}

@@ -25,14 +25,14 @@ const getGeoCodingData = cityName => {
 };
 
 const getWeatherData = (lat, lon, cityName) => {
-    const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
     date = getDate(month, day, year);
 
     fetch(oneCallApiUrl).then(function(response) {
         response.json().then(function(data) {
-
+            console.log(data.current)
             // grab temperature and append to #featured-temp
-            const temp = Math.floor(fahrenheitConverter(data.current.temp));
+            const temp = data.current.temp;
             $('#featured-temp').append(temp + ' ' + degreeSign + 'F');
 
             // grab humidity and append to #featured-humidity
@@ -45,8 +45,12 @@ const getWeatherData = (lat, lon, cityName) => {
 
             // grab uv index and append to #featured-uv-index
             const uvIndex = data.current.uvi;
+             
             $('#featured-uv-index').append(uvIndex);
-
+            
+            // color code uv Index
+            uvIndexValidator(uvIndex);
+            
             // get icon
             const weatherIconId = data.current.weather[0].icon;
             const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
@@ -67,19 +71,14 @@ const getWeatherData = (lat, lon, cityName) => {
                 date = getDate(month, day+i, year);
                 $("#forecast-day-"+ i +" h4").text(date);
 
-                // grab header
-                const $forecastDayHeaderEl = $(".date");
-
                 // grab icon & create element
                 const weatherIconId = currentDay.weather[0].icon;
                 const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
                 const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
 
                 // grab temperature & create p element
-                const tempKelvin = currentDay.temp.max;
-
-                const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
-                const $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
+                const temp = currentDay.temp.max;
+                const $tempEl = $("<p>").text(`Temp: ${temp} ${degreeSign}F`);
 
                 // grab humidity & create p element
                 const humidity = currentDay.humidity;
@@ -94,7 +93,23 @@ const getWeatherData = (lat, lon, cityName) => {
     });
 };
 
-const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
+const uvIndexValidator = uvIndex => {
+    const uvIndexEl = $('#featured-uv-index');
+    // if/else statement to qualify uvIndex number
+    if(uvIndex < 3) {
+        uvIndexEl.addClass("low"); // green
+    } else if(3 <= uvIndex < 6) {
+        uvIndexEl.addClass("moderate"); // yellow
+    } else if (6 <= uvIndex < 8 ) {
+        uvIndexEl.addClass("medium"); // orange
+    } else if (8 <= uvIndex < 11) {
+        uvIndexEl.addClass("high"); // red
+    } else if (uvIndex > 11) {
+        uvIndexEl.addClass("extreme"); // purple
+    } else {
+        alert('error');
+    }
+};
 
 const getDate = (month, day, year) =>  {
     const date = ` ${month}/${day}/${year} `;
