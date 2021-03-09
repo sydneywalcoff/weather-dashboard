@@ -1,4 +1,5 @@
 let apiKey = '7740f742ec7905224fc725aeef79fcd9';
+const degreeSign = '\u00B0';
 
 const $input = $('#city-input');
 const $inputButton = $('.btn');
@@ -19,13 +20,11 @@ const getGeoCodingData = cityName => {
 };
 
 const getWeatherData = (lat, lon, cityName) => {
-    const degreeSign = '\u00B0';
-    
-    let oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    date = getDate();
 
     fetch(oneCallApiUrl).then(function(response) {
         response.json().then(function(data) {
-            console.log(data);
 
             // grab temperature and append to #featured-temp
             const temp = Math.floor(data.current.temp);
@@ -43,13 +42,14 @@ const getWeatherData = (lat, lon, cityName) => {
             const uvIndex = data.current.uvi;
             $('#featured-uv-index').append(uvIndex);
 
-            // get icon and get date
+            // get icon
             const weatherIconId = data.current.weather[0].icon;
             const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
             const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon-sm");
 
             // append to $featuredH2
             $featuredH2.text(cityName);
+            $featuredH2.append(date);
             $featuredH2.append($iconImg);
 
             // forecast
@@ -86,6 +86,15 @@ const getWeatherData = (lat, lon, cityName) => {
     });
 };
 
+const getDate = () =>  {
+    const d = new Date();
+    const day = d.getDate();
+    const month = d.getMonth();
+    const year = d.getFullYear();
+    const date = ` ${month}/${day}/${year}`;
+    return date;
+};
+
 // accepts button input and fetches relevant city data
 const submitButtonHandler = (e) => {
     e.preventDefault();
@@ -93,5 +102,7 @@ const submitButtonHandler = (e) => {
     getGeoCodingData(cityName);
     $input.val('');
 };
+
+
 
 $inputButton.on("click", submitButtonHandler);
