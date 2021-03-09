@@ -7,6 +7,7 @@ A weather dashboard to check the 5 day forecast from cities that the user search
 * HTML
 * CSS
 * JavaScript
+* JQuery
 * BootStrap
 * OpenWeather API
 
