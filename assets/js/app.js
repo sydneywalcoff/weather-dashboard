@@ -1,3 +1,8 @@
+const d = new Date();
+const day = d.getDate();
+const month = d.getMonth();
+const year = d.getFullYear();
+
 let apiKey = '7740f742ec7905224fc725aeef79fcd9';
 const degreeSign = '\u00B0';
 
@@ -21,7 +26,7 @@ const getGeoCodingData = cityName => {
 
 const getWeatherData = (lat, lon, cityName) => {
     const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    date = getDate();
+    date = getDate(month, day, year);
 
     fetch(oneCallApiUrl).then(function(response) {
         response.json().then(function(data) {
@@ -58,6 +63,10 @@ const getWeatherData = (lat, lon, cityName) => {
                 const currentDay = data.daily[i];
                 const $forecastDayEl = $("#forecast-day-"+ i);
 
+                // grab date and append to title
+                date = getDate(month, day+i, year);
+                $("#forecast-day-"+ i +" h4").text(date);
+
                 // grab header
                 const $forecastDayHeaderEl = $(".date");
 
@@ -87,11 +96,7 @@ const getWeatherData = (lat, lon, cityName) => {
 
 const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
 
-const getDate = () =>  {
-    const d = new Date();
-    const day = d.getDate();
-    const month = d.getMonth();
-    const year = d.getFullYear();
+const getDate = (month, day, year) =>  {
     const date = ` ${month}/${day}/${year} `;
     return date;
 };
