@@ -27,7 +27,7 @@ const getWeatherData = (lat, lon, cityName) => {
         response.json().then(function(data) {
 
             // grab temperature and append to #featured-temp
-            const temp = Math.floor(data.current.temp);
+            const temp = Math.floor(fahrenheitConverter(data.current.temp));
             $('#featured-temp').append(temp + ' ' + degreeSign + 'F');
 
             // grab humidity and append to #featured-humidity
@@ -69,7 +69,6 @@ const getWeatherData = (lat, lon, cityName) => {
                 // grab temperature & create p element
                 const tempKelvin = currentDay.temp.max;
 
-                const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
                 const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
                 const $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
 
@@ -86,12 +85,14 @@ const getWeatherData = (lat, lon, cityName) => {
     });
 };
 
+const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
+
 const getDate = () =>  {
     const d = new Date();
     const day = d.getDate();
     const month = d.getMonth();
     const year = d.getFullYear();
-    const date = ` ${month}/${day}/${year}`;
+    const date = ` ${month}/${day}/${year} `;
     return date;
 };
 
