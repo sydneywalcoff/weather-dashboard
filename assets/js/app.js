@@ -11,7 +11,7 @@ const $inputButton = $('.btn');
 const $featuredH2 = $('h2');
 
 const getGeoCodingData = cityName => {
-    const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
+    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     fetch(geoCodingApiUrl).then(function(response) {
         response.json().then(function(data) {
             const lat = data[0].lat;
@@ -52,7 +52,7 @@ const getWeatherData = (lat, lon, cityName) => {
             
             // get icon
             const weatherIconId = data.current.weather[0].icon;
-            const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
+            const iconSrc = `https://openweathermap.org/img/w/${weatherIconId}.png`;
             const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon-sm");
 
             // append to $featuredH2
@@ -74,7 +74,7 @@ const getWeatherData = (lat, lon, cityName) => {
 
                 // grab icon & create element
                 const weatherIconId = currentDay.weather[0].icon;
-                const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
+                const iconSrc = `https://openweathermap.org/img/w/${weatherIconId}.png`;
                 const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
 
                 // grab temperature & create p element
