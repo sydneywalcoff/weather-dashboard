@@ -9,7 +9,6 @@ const getGeoCodingData = cityName => {
     const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     fetch(geoCodingApiUrl).then(function(response) {
         response.json().then(function(data) {
-            console.log(data);
             const lat = data[0].lat;
             const lon = data[0].lon;
             const cityName = data[0].name;
@@ -50,58 +49,41 @@ const getWeatherData = (lat, lon, cityName) => {
             const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon-sm");
 
             // append to $featuredH2
+            $featuredH2.text(cityName);
             $featuredH2.append($iconImg);
+
+            // forecast
+            for(let i=1; i < 6; i++){
+                // current day in the forecast
+                const currentDay = data.daily[i];
+                const $forecastDayEl = $("#forecast-day-"+ i);
+
+                // grab header
+                const $forecastDayHeaderEl = $(".date");
+
+                // grab icon & create element
+                const weatherIconId = currentDay.weather[0].icon;
+                const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`;
+                const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
+
+                // grab temperature & create p element
+                const tempKelvin = currentDay.temp.max;
+
+                const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
+                const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
+                const $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
+
+                // grab humidity & create p element
+                const humidity = currentDay.humidity;
+                const $humidityEl = $("<p>").text(`Humidity: ${humidity}%`);
+
+                // append to container
+                $forecastDayEl.append($iconImg);
+                $forecastDayEl.append($tempEl);
+                $forecastDayEl.append($humidityEl);
+            }
         });
     });
-    
-    
-    // // make forecast api request
-    // fetch(forecastApiUrl).then(function(response){
-    //     // reformat into json
-    //     response.json().then(function(data) {
-    //         let counter =1;
-    //         for(let i=0; i < data.list.length; i+=8){
-    //             // current day in the forecast
-    //             const currentDay = data.list[i];
-    //             const $forecastDayEl = $("#forecast-day-"+ counter);
-
-    //             // grab header
-    //             const $forecastDayHeaderEl = $(".date");
-
-    //             // grab icon & create element
-    //             const weatherIconId = currentDay.weather[0].icon;
-    //             const iconSrc = `http://openweathermap.org/img/w/${weatherIconId}.png`
-    //             const $iconImg = $("<img>").attr("src", iconSrc).addClass("icon");
-
-    //             // grab temperature & create p element
-    //             const tempKelvin = currentDay.main.temp;
-
-    //             const fahrenheitConverter = kelvin => (((kelvin - 273.15)*9)/5)+32;
-    //             const tempFahrenheit = Math.floor(fahrenheitConverter(tempKelvin));
-    //             const $tempEl = $("<p>").text(`Temp: ${tempFahrenheit} ${degreeSign}F`);
-
-    //             // grab humidity & create p element
-    //             const humidity = currentDay.main.humidity;
-    //             const $humidityEl = $("<p>").text(`Humidity: ${humidity}%`)
-
-    //             // append to container
-    //             $forecastDayEl.append($iconImg);
-    //             $forecastDayEl.append($tempEl);
-    //             $forecastDayEl.append($humidityEl);
-
-    //             // add to counter
-    //             counter++;
-    //         }
-    //     });
-    // });
-    displayWeatherData(cityName);
-};
-
-const displayWeatherData = cityName => {
-    $featuredH2.text(cityName)
-    // TO DO: append date and icon
-    $featuredH2.append(" (date)")
-
 };
 
 // accepts button input and fetches relevant city data
