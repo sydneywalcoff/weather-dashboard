@@ -11,6 +11,9 @@ A weather dashboard to check the 5 day forecast from cities that the user search
 * BootStrap
 * OpenWeather API
 
+## Website
+https://sydneywalcoff.github.io/weather-dashboard
+
 ## Screenshot
 ![screenshot](./weather-dashboard-ss.png)
 
