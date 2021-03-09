@@ -11,7 +11,7 @@ const $inputButton = $('.btn');
 const $featuredH2 = $('h2');
 const $savedSearchesEl = $('#saved-searches');
 
-const savedSearches = [];
+let savedSearches = [];
 
 const getGeoCodingData = cityName => {
     const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
@@ -125,7 +125,7 @@ const submitButtonHandler = (e) => {
     clearResults();
     let cityName = $input.val();
     getGeoCodingData(cityName);
-    saveSearches(cityName)
+    saveSearches(cityName);
     $input.val('');
 };
 
@@ -142,15 +142,47 @@ const clearResults = () => {
 };
 
 const saveSearches = cityName => {
-    // $savedSearchesEl.addClass("card");
     // create `p` element with content cityName class card-body
     const savedSearchP = $("<p>").addClass("card text-center").text(cityName);
 
     // append to savedSearchesEl
     $savedSearchesEl.append(savedSearchP);
+    savedSearches.push(cityName);
+
+    // add button listener to re-search
+    $(savedSearchP).on("click", function() {
+        console.log("you clicked ", cityName);
+        clearResults();
+        getGeoCodingData(cityName);
+    });
+
+    localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
+};
+
+const loadSearches = () => {
+    savedSearches = JSON.parse(localStorage.getItem("savedSearches"));
+    if(!savedSearches) {
+        savedSearches = [];
+    }
+
+
+    for(let i =0; i < savedSearches.length; i++) {
+        let currentCity = savedSearches[i];
+        const savedSearchP = $("<p>").addClass("card text-center").text(currentCity);
+
+        // append to savedSearchesEl
+        $savedSearchesEl.append(savedSearchP);
+
+        // add button listener to re-search
+        $(savedSearchP).on("click", function() {
+            console.log("you clicked ", currentCity)
+            clearResults();
+            getGeoCodingData(currentCity);
+        });
+    };
 };
 
 
-
+loadSearches();
 
 $inputButton.on("click", submitButtonHandler);
