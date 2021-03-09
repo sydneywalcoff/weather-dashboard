@@ -12,6 +12,7 @@ A weather dashboard to check the 5 day forecast from cities that the user search
 * OpenWeather API
 
 ## Screenshot
+![screenshot](./weather-dashboard-ss.png)
 
 ## Contribution
 Made with 🖤 by Sydney Walcoff
