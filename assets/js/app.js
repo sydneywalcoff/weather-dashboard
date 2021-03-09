@@ -9,7 +9,6 @@ const degreeSign = '\u00B0';
 const $input = $('#city-input');
 const $inputButton = $('.btn');
 const $featuredH2 = $('h2');
-const featuredTemp = $('.featured-temperature').text();
 
 const getGeoCodingData = cityName => {
     const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
@@ -69,7 +68,9 @@ const getWeatherData = (lat, lon, cityName) => {
 
                 // grab date and append to title
                 date = getDate(month, day+i, year);
-                $("#forecast-day-"+ i +" h4").text(date);
+                
+                let dateEl = $("<h4>").text(date);
+                $forecastDayEl.append(dateEl);
 
                 // grab icon & create element
                 const weatherIconId = currentDay.weather[0].icon;
@@ -119,9 +120,19 @@ const getDate = (month, day, year) =>  {
 // accepts button input and fetches relevant city data
 const submitButtonHandler = (e) => {
     e.preventDefault();
+    clearResults();
     let cityName = $input.val();
     getGeoCodingData(cityName);
     $input.val('');
+};
+
+// clears past results
+const clearResults = () => {
+    for(let i=1; i< 6; i++) {
+        const $forecastDayEl = $("#forecast-day-"+ i);
+        console.log($forecastDayEl)
+        $forecastDayEl.text('');
+    }
 };
 
 
