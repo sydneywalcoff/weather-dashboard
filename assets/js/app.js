@@ -99,16 +99,12 @@ const getWeatherData = (lat, lon, cityName) => {
 const uvIndexValidator = uvIndex => {
     const uvIndexEl = $('#featured-uv-index');
     // if/else statement to qualify uvIndex number
-    if(uvIndex < 3) {
-        uvIndexEl.addClass("low"); // green
-    } else if(3 <= uvIndex < 6) {
-        uvIndexEl.addClass("moderate"); // yellow
-    } else if (6 <= uvIndex < 8 ) {
-        uvIndexEl.addClass("medium"); // orange
-    } else if (8 <= uvIndex < 11) {
-        uvIndexEl.addClass("high"); // red
-    } else if (uvIndex > 11) {
-        uvIndexEl.addClass("extreme"); // purple
+    if(uvIndex < 4) {
+        uvIndexEl.addClass("bg-success text-light"); // green white text
+    } else if(4 <= uvIndex < 7) {
+        uvIndexEl.addClass("bg-warning text-light"); // yellow white text
+    } else if (7 <= uvIndex) {
+        uvIndexEl.addClass("bg-danger text-light"); // red white text
     } else {
         alert('error');
     }
