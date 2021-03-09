@@ -128,6 +128,10 @@ const submitButtonHandler = (e) => {
 
 // clears past results
 const clearResults = () => {
+    $("#featured-temp").text("Temperature: ");
+    $("#featured-humidity").text("Humidity: ");
+    $("#featured-wind-speed").text("Wind Speed: ");
+    $("#featured-uv-index").text("");
     for(let i=1; i< 6; i++) {
         const $forecastDayEl = $("#forecast-day-"+ i);
         console.log($forecastDayEl)
