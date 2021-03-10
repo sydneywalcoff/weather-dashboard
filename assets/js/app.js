@@ -99,12 +99,12 @@ const getWeatherData = (lat, lon, cityName) => {
 const uvIndexValidator = uvIndex => {
     const uvIndexEl = $('#featured-uv-index');
     // if/else statement to qualify uvIndex number
-    if(uvIndex < 4) {
-        uvIndexEl.addClass("badge badge-success text-light"); // green light text
+    if (7 <= uvIndex) {
+        uvIndexEl.addClass("badge badge-danger text-light"); // red light text
     } else if(4 <= uvIndex < 7) {
         uvIndexEl.addClass("badge badge-warning text-dark"); // yellow dark text
-    } else if (7 <= uvIndex) {
-        uvIndexEl.addClass("badge badge-danger text-light"); // red light text
+    } else if(uvIndex < 4) {
+        uvIndexEl.addClass("badge badge-success text-light"); // green light text
     } else {
         alert('error');
     }
